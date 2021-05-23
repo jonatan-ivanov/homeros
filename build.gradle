@@ -1,0 +1,50 @@
+buildscript {
+	configurations.classpath {
+		resolutionStrategy.activateDependencyLocking()
+	}
+}
+
+plugins {
+	id 'java-library'
+	id 'idea'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation platform('org.junit:junit-bom:5.+')
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+dependencyLocking {
+	lockAllConfigurations()
+}
+
+tasks.register('resolveAndLockAll') {
+	description = 'Resolves dependencies of all configurations and writes them into the lock file.'
+	doFirst {
+		assert gradle.startParameter.writeDependencyLocks : 'Execute resolveAndLockAll --write-locks'
+	}
+	doLast {
+		configurations
+			.findAll { it.canBeResolved }
+			.each { it.resolve() }
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+tasks.register('cleanAll') {
+	description = 'Deletes the build directory and the IDE files and directories'
+	group = 'build'
+	dependsOn clean, cleanIdea, cleanIdeaWorkspace
+	doLast {
+		delete 'out', '.idea'
+	}
+}
