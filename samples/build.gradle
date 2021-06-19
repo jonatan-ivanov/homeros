@@ -1,0 +1,7 @@
+dependencies {
+	implementation project(':micrometer-brave')
+
+	implementation 'org.slf4j:slf4j-simple:1.7.+'
+	implementation 'io.micrometer:micrometer-registry-prometheus:latest.release'
+	implementation 'io.zipkin.reporter2:zipkin-sender-okhttp3:latest.release'
+}

@@ -1,0 +1,19 @@
+# This is a Gradle generated file for dependency locking.
+# Manual edits can break the build and are not advised.
+# This file is expected to be part of source control.
+io.micrometer:micrometer-core:1.7.0=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+io.zipkin.brave:brave:5.13.3=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+io.zipkin.reporter2:zipkin-reporter-brave:2.16.3=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+io.zipkin.reporter2:zipkin-reporter:2.16.3=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+io.zipkin.zipkin2:zipkin:2.23.2=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+org.apiguardian:apiguardian-api:1.1.0=testCompileClasspath,testRuntimeClasspath
+org.hdrhistogram:HdrHistogram:2.1.12=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+org.junit.jupiter:junit-jupiter-api:5.7.2=testCompileClasspath,testRuntimeClasspath
+org.junit.jupiter:junit-jupiter-engine:5.7.2=testRuntimeClasspath
+org.junit.platform:junit-platform-commons:1.7.2=testCompileClasspath,testRuntimeClasspath
+org.junit.platform:junit-platform-engine:1.7.2=testRuntimeClasspath
+org.junit:junit-bom:5.7.2=testCompileClasspath,testRuntimeClasspath
+org.latencyutils:LatencyUtils:2.0.3=default,runtimeClasspath,testRuntimeClasspath
+org.opentest4j:opentest4j:1.2.0=testCompileClasspath,testRuntimeClasspath
+org.slf4j:slf4j-api:1.7.31=compileClasspath,default,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+empty=annotationProcessor,archives,testAnnotationProcessor

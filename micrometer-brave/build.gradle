@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+
+dependencies {
+	api project(':api')
+
+	api 'org.slf4j:slf4j-api:1.7.+'
+	api 'io.micrometer:micrometer-core:latest.release'
+	api 'io.zipkin.brave:brave:latest.release'
+}
