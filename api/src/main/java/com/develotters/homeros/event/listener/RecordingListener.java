@@ -6,7 +6,7 @@ import com.develotters.homeros.event.span.SpanRecording;
 public interface RecordingListener<T> {
 	void onStart(SpanRecording<T> spanRecording);
 	void onStop(SpanRecording<T> spanRecording);
-	void onError(SpanRecording<T> error);
+	void onError(SpanRecording<T> spanRecording);
 	void record(InstantRecording instantRecording);
 
 	static RecordingListener<?> NOOP() {
@@ -18,7 +18,7 @@ public interface RecordingListener<T> {
 			public void onStop(SpanRecording<Object> spanRecording) {}
 
 			@Override
-			public void onError(SpanRecording<Object> error) {}
+			public void onError(SpanRecording<Object> spanRecording) {}
 
 			@Override
 			public void record(InstantRecording instantRecording) {}
