@@ -9,10 +9,6 @@ import com.develotters.homeros.event.span.SpanRecording;
 public class CompositeRecordingListener<T> implements RecordingListener<T> {
 	private final List<RecordingListener<T>> listeners;
 
-	public CompositeRecordingListener(RecordingListener<T>... listeners) {
-		this(Arrays.stream(listeners).toList());
-	}
-
 	public CompositeRecordingListener(List<RecordingListener<T>> listeners) {
 		this.listeners = listeners;
 	}
