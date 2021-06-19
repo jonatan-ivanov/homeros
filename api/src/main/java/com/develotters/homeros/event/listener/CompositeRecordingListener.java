@@ -1,6 +1,5 @@
 package com.develotters.homeros.event.listener;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.develotters.homeros.event.instant.InstantRecording;
