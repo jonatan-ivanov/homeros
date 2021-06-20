@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import brave.Tracing;
 import com.develotters.homeros.event.Recorder;
-import com.develotters.homeros.event.lmt.LmtContextFactory;
 import com.develotters.homeros.event.lmt.LmtRecordingListener;
 import com.develotters.homeros.event.span.SpanRecording;
 import com.develotters.homeros.event.tag.Tag;
@@ -40,7 +39,6 @@ public class BookstoreExample {
 
 	private static final Recorder<?> recorder = new SimpleRecorder<>(
 			new LmtRecordingListener(logger, registry, tracing.tracer()),
-			new LmtContextFactory(),
 			Clock.SYSTEM
 	);
 

@@ -31,4 +31,9 @@ public class CompositeRecordingListener<T> implements RecordingListener<T> {
 	public void record(InstantRecording instantRecording) {
 		listeners.forEach(listener -> listener.record(instantRecording));
 	}
+
+	@Override
+	public T createContext() {
+		return null;
+	}
 }

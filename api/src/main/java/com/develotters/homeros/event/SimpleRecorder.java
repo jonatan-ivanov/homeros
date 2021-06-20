@@ -1,6 +1,5 @@
 package com.develotters.homeros.event;
 
-import com.develotters.homeros.event.context.ContextFactory;
 import com.develotters.homeros.event.instant.InstantEvent;
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.instant.NoOpInstantRecording;
@@ -14,20 +13,18 @@ import com.develotters.homeros.time.Clock;
 
 public class SimpleRecorder<T> implements Recorder<T> {
 	private final RecordingListener<T> listener;
-	private final ContextFactory<T> contextFactory;
 	private final Clock clock;
 	private volatile boolean enabled;
 
-	public SimpleRecorder(RecordingListener<T> listener, ContextFactory<T> contextFactory, Clock clock) {
+	public SimpleRecorder(RecordingListener<T> listener, Clock clock) {
 		this.listener = listener;
-		this.contextFactory = contextFactory;
 		this.clock = clock;
 		this.enabled = true;
 	}
 
 	@Override
 	public SpanRecording<T> recordingFor(SpanEvent event) {
-		return enabled ? new SimpleSpanRecording<>(event, listener, contextFactory, clock) : new NoOpSpanRecording<>();
+		return enabled ? new SimpleSpanRecording<>(event, listener, clock) : new NoOpSpanRecording<>();
 	}
 
 	@Override

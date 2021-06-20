@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.develotters.homeros.event.context.ContextFactory;
 import com.develotters.homeros.event.listener.RecordingListener;
 import com.develotters.homeros.event.tag.Tag;
 import com.develotters.homeros.time.Clock;
@@ -22,10 +21,10 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	private final Set<Tag> tags = new LinkedHashSet<>();
 	private Throwable error = null;
 
-	public SimpleSpanRecording(SpanEvent event, RecordingListener<T> listener, ContextFactory<T> contextFactory, Clock clock) {
+	public SimpleSpanRecording(SpanEvent event, RecordingListener<T> listener, Clock clock) {
 		this.event = event;
 		this.listener = listener;
-		this.context = contextFactory.createContext();
+		this.context = listener.createContext();
 		this.clock = clock;
 	}
 

@@ -8,10 +8,10 @@ import brave.Span;
 import brave.Tracer;
 import brave.propagation.TraceContext;
 import com.develotters.homeros.event.Recording;
+import com.develotters.homeros.event.exemplar.Exemplar;
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
 import com.develotters.homeros.event.span.SpanRecording;
-import com.develotters.homeros.event.exemplar.Exemplar;
 import com.develotters.homeros.event.tag.Cardinality;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -19,7 +19,7 @@ import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Timer;
 import org.slf4j.Logger;
 
-public class LmtRecordingListener implements RecordingListener<LmtContext> {
+public class LmtRecordingListener implements RecordingListener<LmtRecordingListener.LmtContext> {
 	private final Logger logger;
 	private final MeterRegistry registry;
 	private final Tracer tracer;
@@ -83,6 +83,11 @@ public class LmtRecordingListener implements RecordingListener<LmtContext> {
 				.increment();
 	}
 
+	@Override
+	public LmtContext createContext() {
+		return new LmtContext();
+	}
+
 	private List<Tag> metricTags(Recording<?, ?> recording) {
 		return StreamSupport.stream(recording.getTags().spliterator(), false)
 				.filter(tag -> tag.getCardinality() == Cardinality.LOW)
@@ -103,5 +108,17 @@ public class LmtRecordingListener implements RecordingListener<LmtContext> {
 				Exemplar.of("parentId", context.parentIdString()),
 				Exemplar.of("spanId", context.spanIdString())
 		);
+	}
+
+	static class LmtContext {
+		private Tracer.SpanInScope spanInScope;
+
+		Tracer.SpanInScope getSpanInScope() {
+			return spanInScope;
+		}
+
+		void setSpanInScope(Tracer.SpanInScope spanInScope) {
+			this.spanInScope = spanInScope;
+		}
 	}
 }
