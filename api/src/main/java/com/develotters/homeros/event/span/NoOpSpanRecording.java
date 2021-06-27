@@ -47,7 +47,7 @@ public class NoOpSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public long getStartTimeStamp() {
+	public long getStartWallTime() {
 		return 0;
 	}
 

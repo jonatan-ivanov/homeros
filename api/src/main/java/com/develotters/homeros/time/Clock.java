@@ -1,13 +1,17 @@
 package com.develotters.homeros.time;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
 /**
- * From: https://github.com/micrometer-metrics/micrometer/blob/main/micrometer-core/src/main/java/io/micrometer/core/instrument/Clock.java
+ * Mostly from: https://github.com/micrometer-metrics/micrometer/blob/main/micrometer-core/src/main/java/io/micrometer/core/instrument/Clock.java
  */
 public interface Clock {
 	Clock SYSTEM = new Clock() {
 		@Override
 		public long wallTime() {
-			return System.currentTimeMillis();
+			Instant instant = java.time.Clock.systemUTC().instant();
+			return TimeUnit.SECONDS.toNanos(instant.getEpochSecond()) + instant.getNano();
 		}
 
 		@Override
@@ -17,10 +21,9 @@ public interface Clock {
 	};
 
 	/**
-	 * Current wall time in milliseconds since the epoch. Typically equivalent to System.currentTimeMillis.
-	 * Should not be used to determine durations.
+	 * Current wall time in nanoseconds since the epoch. Should not be used to determine durations.
 	 *
-	 * @return Wall time in milliseconds
+	 * @return Wall time in nanoseconds
 	 */
 	long wallTime();
 

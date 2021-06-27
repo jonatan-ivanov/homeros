@@ -1,5 +1,7 @@
 package com.develotters.homeros.event;
 
+import java.util.concurrent.TimeUnit;
+
 import brave.Span;
 import brave.Tracer;
 import com.develotters.homeros.event.instant.InstantRecording;
@@ -15,8 +17,7 @@ public class BraveRecordingListener implements RecordingListener<BraveRecordingL
 
 	@Override
 	public void onStart(SpanRecording<BraveContext> spanRecording) {
-		// TODO: use start(long) instead?
-		Span span = tracer.nextSpan().name(spanRecording.getEvent().getName()).start();
+		Span span = tracer.nextSpan().name(spanRecording.getEvent().getName()).start(getStartTimeInMicros(spanRecording));
 		spanRecording.getContext().setSpanInScope(tracer.withSpanInScope(span));
 	}
 
@@ -25,8 +26,7 @@ public class BraveRecordingListener implements RecordingListener<BraveRecordingL
 		Span span = tracer.currentSpan();
 		spanRecording.getTags().forEach(tag -> span.tag(tag.getKey(), tag.getValue()));
 		spanRecording.getContext().getSpanInScope().close();
-		// TODO: use finish(long) instead?
-		span.finish();
+		span.finish(getStopTimeInMicros(spanRecording));
 	}
 
 	@Override
@@ -42,6 +42,14 @@ public class BraveRecordingListener implements RecordingListener<BraveRecordingL
 	@Override
 	public BraveContext createContext() {
 		return new BraveContext();
+	}
+
+	private long getStartTimeInMicros(SpanRecording<BraveContext> spanRecording) {
+		return TimeUnit.NANOSECONDS.toMicros(spanRecording.getStartWallTime());
+	}
+
+	private long getStopTimeInMicros(SpanRecording<BraveContext> spanRecording) {
+		return TimeUnit.NANOSECONDS.toMicros(spanRecording.getStartWallTime() + spanRecording.getDuration().toNanos());
 	}
 
 	static class BraveContext {

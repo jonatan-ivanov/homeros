@@ -94,8 +94,8 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 		}
 
 		@Override
-		public long getStartTimeStamp() {
-			return this.delegate.getStartTimeStamp();
+		public long getStartWallTime() {
+			return this.delegate.getStartWallTime();
 		}
 
 		@Override
