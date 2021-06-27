@@ -32,10 +32,12 @@ public class SimpleRecorder<T> implements Recorder<T> {
 		return enabled ? new SimpleInstantRecording(event, listener) : new NoOpInstantRecording();
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return this.enabled;
 	}
 
+	@Override
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}

@@ -8,6 +8,7 @@ public interface SpanRecording<T> extends Recording<SpanEvent, SpanRecording<T>>
 	Duration getDuration();
 	long getStartNanos();
 	long getStopNanos();
+	long getStartTimeStamp();
 
 	SpanRecording<T> start();
 	void stop();

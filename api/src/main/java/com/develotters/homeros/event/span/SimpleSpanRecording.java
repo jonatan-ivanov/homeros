@@ -18,6 +18,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	private Duration duration = Duration.ZERO;
 	private long started = 0;
 	private long stopped = 0;
+	private long startTimeStamp = 0;
 	private final Set<Tag> tags = new LinkedHashSet<>();
 	private Throwable error = null;
 
@@ -49,6 +50,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 			throw new IllegalStateException("SpanRecording has already been started");
 		}
 		this.listener.onStart(this);
+		this.startTimeStamp = clock.wallTime();
 		this.started = clock.monotonicTime();
 
 		return this;
@@ -57,6 +59,11 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	@Override
 	public long getStopNanos() {
 		return this.stopped;
+	}
+
+	@Override
+	public long getStartTimeStamp() {
+		return this.startTimeStamp;
 	}
 
 	@Override

@@ -47,6 +47,11 @@ public class NoOpSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
+	public long getStartTimeStamp() {
+		return 0;
+	}
+
+	@Override
 	public SpanRecording<T> start() {
 		return this;
 	}

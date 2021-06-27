@@ -8,4 +8,6 @@ import com.develotters.homeros.event.span.SpanRecording;
 public interface Recorder<T> {
 	SpanRecording<T> recordingFor(SpanEvent event);
 	InstantRecording recordingFor(InstantEvent event);
+	boolean isEnabled();
+	void setEnabled(boolean enabled);
 }
