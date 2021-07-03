@@ -1,20 +1,20 @@
-package com.develotters.homeros.event.span;
+package com.develotters.homeros.event.interval;
 
 import java.time.Duration;
 
 import com.develotters.homeros.event.Recording;
 
-public interface SpanRecording<T> extends Recording<SpanEvent, SpanRecording<T>> {
+public interface IntervalRecording<T> extends Recording<IntervalEvent, IntervalRecording<T>> {
 	Duration getDuration();
 	long getStartNanos();
 	long getStopNanos();
 	long getStartWallTime();
 
-	SpanRecording<T> start();
+	IntervalRecording<T> start();
 	void stop();
 
 	Throwable getError();
-	SpanRecording<T> error(Throwable error);
+	IntervalRecording<T> error(Throwable error);
 
 	T getContext();
 }

@@ -1,4 +1,4 @@
-package com.develotters.homeros.event.span;
+package com.develotters.homeros.event.interval;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -9,8 +9,8 @@ import com.develotters.homeros.event.listener.RecordingListener;
 import com.develotters.homeros.event.tag.Tag;
 import com.develotters.homeros.time.Clock;
 
-public class SimpleSpanRecording<T> implements SpanRecording<T> {
-	private final SpanEvent event;
+public class SimpleIntervalRecording<T> implements IntervalRecording<T> {
+	private final IntervalEvent event;
 	private final RecordingListener<T> listener;
 	private final T context;
 	private final Clock clock;
@@ -22,7 +22,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	private final Set<Tag> tags = new LinkedHashSet<>();
 	private Throwable error = null;
 
-	public SimpleSpanRecording(SpanEvent event, RecordingListener<T> listener, Clock clock) {
+	public SimpleIntervalRecording(IntervalEvent event, RecordingListener<T> listener, Clock clock) {
 		this.event = event;
 		this.listener = listener;
 		this.context = listener.createContext();
@@ -30,7 +30,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanEvent getEvent() {
+	public IntervalEvent getEvent() {
 		return this.event;
 	}
 
@@ -45,9 +45,9 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> start() {
+	public IntervalRecording<T> start() {
 		if (this.started != 0) {
-			throw new IllegalStateException("SpanRecording has already been started");
+			throw new IllegalStateException("IntervalRecording has already been started");
 		}
 
 		this.startWallTime = clock.wallTime();
@@ -70,7 +70,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	@Override
 	public void stop() {
 		if (this.started == 0) {
-			throw new IllegalStateException("SpanRecording hasn't been started");
+			throw new IllegalStateException("IntervalRecording hasn't been started");
 		}
 		checkIfStopped();
 		this.stopped = clock.monotonicTime();
@@ -84,7 +84,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> tag(Tag tag) {
+	public IntervalRecording<T> tag(Tag tag) {
 		checkIfStopped();
 		this.tags.add(tag);
 		return this;
@@ -96,7 +96,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> error(Throwable error) {
+	public IntervalRecording<T> error(Throwable error) {
 		checkIfStopped();
 		this.error = error;
 		this.listener.onError(this);
@@ -120,7 +120,7 @@ public class SimpleSpanRecording<T> implements SpanRecording<T> {
 
 	private void checkIfStopped() {
 		if (this.stopped != 0) {
-			throw new IllegalStateException("SpanRecording has already been stopped");
+			throw new IllegalStateException("IntervalRecording has already been stopped");
 		}
 	}
 }

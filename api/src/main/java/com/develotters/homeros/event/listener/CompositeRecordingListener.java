@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.develotters.homeros.event.instant.InstantRecording;
-import com.develotters.homeros.event.span.SpanEvent;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalEvent;
+import com.develotters.homeros.event.interval.IntervalRecording;
 import com.develotters.homeros.event.tag.Tag;
 
 public class CompositeRecordingListener implements RecordingListener<CompositeContext> {
@@ -21,23 +21,23 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 	}
 
 	@Override
-	public void onStart(SpanRecording<CompositeContext> spanRecording) {
+	public void onStart(IntervalRecording<CompositeContext> intervalRecording) {
 		for (RecordingListener<?> listener : listeners) {
-			listener.onStart(new SpanRecordingView<>(listener, spanRecording));
+			listener.onStart(new IntervalRecordingView<>(listener, intervalRecording));
 		}
 	}
 
 	@Override
-	public void onStop(SpanRecording<CompositeContext> spanRecording) {
+	public void onStop(IntervalRecording<CompositeContext> intervalRecording) {
 		for (RecordingListener<?> listener : listeners) {
-			listener.onStop(new SpanRecordingView<>(listener, spanRecording));
+			listener.onStop(new IntervalRecordingView<>(listener, intervalRecording));
 		}
 	}
 
 	@Override
-	public void onError(SpanRecording<CompositeContext> spanRecording) {
+	public void onError(IntervalRecording<CompositeContext> intervalRecording) {
 		for (RecordingListener<?> listener : listeners) {
-			listener.onError(new SpanRecordingView<>(listener, spanRecording));
+			listener.onError(new IntervalRecordingView<>(listener, intervalRecording));
 		}
 	}
 
@@ -53,17 +53,17 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 		return new CompositeContext(this.listeners);
 	}
 
-	static class SpanRecordingView<T> implements SpanRecording<T> {
+	static class IntervalRecordingView<T> implements IntervalRecording<T> {
 		private final RecordingListener<?> listener;
-		private final SpanRecording<CompositeContext> delegate;
+		private final IntervalRecording<CompositeContext> delegate;
 
-		SpanRecordingView(RecordingListener<?> listener, SpanRecording<CompositeContext> delegate) {
+		IntervalRecordingView(RecordingListener<?> listener, IntervalRecording<CompositeContext> delegate) {
 			this.listener = listener;
 			this.delegate = delegate;
 		}
 
 		@Override
-		public SpanEvent getEvent() {
+		public IntervalEvent getEvent() {
 			return this.delegate.getEvent();
 		}
 
@@ -74,8 +74,8 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 
 		@Override
 		@SuppressWarnings("unchecked")
-		public SpanRecording<T> tag(Tag tag) {
-			return (SpanRecording<T>) this.delegate.tag(tag);
+		public IntervalRecording<T> tag(Tag tag) {
+			return (IntervalRecording<T>) this.delegate.tag(tag);
 		}
 
 		@Override
@@ -100,8 +100,8 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 
 		@Override
 		@SuppressWarnings("unchecked")
-		public SpanRecording<T> start() {
-			return (SpanRecording<T>) this.delegate.start();
+		public IntervalRecording<T> start() {
+			return (IntervalRecording<T>) this.delegate.start();
 		}
 
 		@Override
@@ -116,8 +116,8 @@ public class CompositeRecordingListener implements RecordingListener<CompositeCo
 
 		@Override
 		@SuppressWarnings("unchecked")
-		public SpanRecording<T> error(Throwable error) {
-			return (SpanRecording<T>) this.delegate.error(error);
+		public IntervalRecording<T> error(Throwable error) {
+			return (IntervalRecording<T>) this.delegate.error(error);
 		}
 
 		@Override

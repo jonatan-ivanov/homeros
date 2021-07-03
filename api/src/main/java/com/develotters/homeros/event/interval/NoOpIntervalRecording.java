@@ -1,14 +1,14 @@
-package com.develotters.homeros.event.span;
+package com.develotters.homeros.event.interval;
 
 import java.time.Duration;
 import java.util.Collections;
 
 import com.develotters.homeros.event.tag.Tag;
 
-public class NoOpSpanRecording<T> implements SpanRecording<T> {
+public class NoOpIntervalRecording<T> implements IntervalRecording<T> {
 	@Override
-	public SpanEvent getEvent() {
-		return new SpanEvent() {
+	public IntervalEvent getEvent() {
+		return new IntervalEvent() {
 			@Override
 			public String getName() {
 				return "noop";
@@ -27,7 +27,7 @@ public class NoOpSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> tag(Tag tag) {
+	public IntervalRecording<T> tag(Tag tag) {
 		return this;
 	}
 
@@ -52,7 +52,7 @@ public class NoOpSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> start() {
+	public IntervalRecording<T> start() {
 		return this;
 	}
 
@@ -66,7 +66,7 @@ public class NoOpSpanRecording<T> implements SpanRecording<T> {
 	}
 
 	@Override
-	public SpanRecording<T> error(Throwable error) {
+	public IntervalRecording<T> error(Throwable error) {
 		return this;
 	}
 

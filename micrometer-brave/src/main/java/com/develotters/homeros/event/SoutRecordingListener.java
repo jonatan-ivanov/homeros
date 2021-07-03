@@ -2,22 +2,22 @@ package com.develotters.homeros.event;
 
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 
 public class SoutRecordingListener implements RecordingListener<Void> {
 	@Override
-	public void onStart(SpanRecording<Void> spanRecording) {
-		System.out.println("Starting: " + spanRecording);
+	public void onStart(IntervalRecording<Void> intervalRecording) {
+		System.out.println("Started: " + intervalRecording);
 	}
 
 	@Override
-	public void onStop(SpanRecording<Void> spanRecording) {
-		System.out.println("Stopped: " + spanRecording);
+	public void onStop(IntervalRecording<Void> intervalRecording) {
+		System.out.println("Stopped: " + intervalRecording);
 	}
 
 	@Override
-	public void onError(SpanRecording<Void> spanRecording) {
-		System.out.println("Oops, an error occurred!\n" + spanRecording);
+	public void onError(IntervalRecording<Void> intervalRecording) {
+		System.out.println("Oops, an error occurred!\n" + intervalRecording);
 	}
 
 	@Override

@@ -5,10 +5,10 @@ import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.instant.NoOpInstantRecording;
 import com.develotters.homeros.event.instant.SimpleInstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
-import com.develotters.homeros.event.span.NoOpSpanRecording;
-import com.develotters.homeros.event.span.SimpleSpanRecording;
-import com.develotters.homeros.event.span.SpanEvent;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.NoOpIntervalRecording;
+import com.develotters.homeros.event.interval.SimpleIntervalRecording;
+import com.develotters.homeros.event.interval.IntervalEvent;
+import com.develotters.homeros.event.interval.IntervalRecording;
 import com.develotters.homeros.time.Clock;
 
 public class SimpleRecorder<T> implements Recorder<T> {
@@ -23,8 +23,8 @@ public class SimpleRecorder<T> implements Recorder<T> {
 	}
 
 	@Override
-	public SpanRecording<T> recordingFor(SpanEvent event) {
-		return enabled ? new SimpleSpanRecording<>(event, listener, clock) : new NoOpSpanRecording<>();
+	public IntervalRecording<T> recordingFor(IntervalEvent event) {
+		return enabled ? new SimpleIntervalRecording<>(event, listener, clock) : new NoOpIntervalRecording<>();
 	}
 
 	@Override

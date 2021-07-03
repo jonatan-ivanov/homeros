@@ -2,7 +2,7 @@ package com.develotters.homeros.event;
 
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 import org.slf4j.Logger;
 
 public class Slf4jRecordingListener implements RecordingListener<Void> {
@@ -13,18 +13,18 @@ public class Slf4jRecordingListener implements RecordingListener<Void> {
 	}
 
 	@Override
-	public void onStart(SpanRecording<Void> spanRecording) {
-		logger.info("Starting: {}", spanRecording);
+	public void onStart(IntervalRecording<Void> intervalRecording) {
+		logger.info("Started: {}", intervalRecording);
 	}
 
 	@Override
-	public void onStop(SpanRecording<Void> spanRecording) {
-		logger.info("Stopped: {}", spanRecording);
+	public void onStop(IntervalRecording<Void> intervalRecording) {
+		logger.info("Stopped: {}", intervalRecording);
 	}
 
 	@Override
-	public void onError(SpanRecording<Void> spanRecording) {
-		logger.error("Oops, an error occurred!", spanRecording.getError());
+	public void onError(IntervalRecording<Void> intervalRecording) {
+		logger.error("Oops, an error occurred!", intervalRecording.getError());
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import brave.Span;
 import brave.Tracer;
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 
 public class BraveRecordingListener implements RecordingListener<BraveRecordingListener.BraveContext> {
 	private final Tracer tracer;
@@ -16,22 +16,24 @@ public class BraveRecordingListener implements RecordingListener<BraveRecordingL
 	}
 
 	@Override
-	public void onStart(SpanRecording<BraveContext> spanRecording) {
-		Span span = tracer.nextSpan().name(spanRecording.getEvent().getName()).start(getStartTimeInMicros(spanRecording));
-		spanRecording.getContext().setSpanInScope(tracer.withSpanInScope(span));
+	public void onStart(IntervalRecording<BraveContext> intervalRecording) {
+		Span span = tracer.nextSpan()
+				.name(intervalRecording.getEvent().getName())
+				.start(getStartTimeInMicros(intervalRecording));
+		intervalRecording.getContext().setSpanInScope(tracer.withSpanInScope(span));
 	}
 
 	@Override
-	public void onStop(SpanRecording<BraveContext> spanRecording) {
+	public void onStop(IntervalRecording<BraveContext> intervalRecording) {
 		Span span = tracer.currentSpan();
-		spanRecording.getTags().forEach(tag -> span.tag(tag.getKey(), tag.getValue()));
-		spanRecording.getContext().getSpanInScope().close();
-		span.finish(getStopTimeInMicros(spanRecording));
+		intervalRecording.getTags().forEach(tag -> span.tag(tag.getKey(), tag.getValue()));
+		intervalRecording.getContext().getSpanInScope().close();
+		span.finish(getStopTimeInMicros(intervalRecording));
 	}
 
 	@Override
-	public void onError(SpanRecording<BraveContext> spanRecording) {
-		tracer.currentSpan().error(spanRecording.getError());
+	public void onError(IntervalRecording<BraveContext> intervalRecording) {
+		tracer.currentSpan().error(intervalRecording.getError());
 	}
 
 	@Override
@@ -44,12 +46,12 @@ public class BraveRecordingListener implements RecordingListener<BraveRecordingL
 		return new BraveContext();
 	}
 
-	private long getStartTimeInMicros(SpanRecording<BraveContext> spanRecording) {
-		return TimeUnit.NANOSECONDS.toMicros(spanRecording.getStartWallTime());
+	private long getStartTimeInMicros(IntervalRecording<BraveContext> intervalRecording) {
+		return TimeUnit.NANOSECONDS.toMicros(intervalRecording.getStartWallTime());
 	}
 
-	private long getStopTimeInMicros(SpanRecording<BraveContext> spanRecording) {
-		return TimeUnit.NANOSECONDS.toMicros(spanRecording.getStartWallTime() + spanRecording.getDuration().toNanos());
+	private long getStopTimeInMicros(IntervalRecording<BraveContext> intervalRecording) {
+		return TimeUnit.NANOSECONDS.toMicros(intervalRecording.getStartWallTime() + intervalRecording.getDuration().toNanos());
 	}
 
 	static class BraveContext {

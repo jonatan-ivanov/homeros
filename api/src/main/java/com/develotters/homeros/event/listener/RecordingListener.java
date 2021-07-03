@@ -2,11 +2,11 @@ package com.develotters.homeros.event.listener;
 
 import com.develotters.homeros.event.context.ContextFactory;
 import com.develotters.homeros.event.instant.InstantRecording;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 
 public interface RecordingListener<T> extends ContextFactory<T> {
-	void onStart(SpanRecording<T> spanRecording);
-	void onStop(SpanRecording<T> spanRecording);
-	void onError(SpanRecording<T> spanRecording);
+	void onStart(IntervalRecording<T> intervalRecording);
+	void onStop(IntervalRecording<T> intervalRecording);
+	void onError(IntervalRecording<T> intervalRecording);
 	void record(InstantRecording instantRecording);
 }

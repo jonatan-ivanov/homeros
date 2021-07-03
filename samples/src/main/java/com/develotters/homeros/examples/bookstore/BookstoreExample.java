@@ -9,7 +9,7 @@ import com.develotters.homeros.event.Recorder;
 import com.develotters.homeros.event.SoutRecordingListener;
 import com.develotters.homeros.event.listener.CompositeContext;
 import com.develotters.homeros.event.listener.CompositeRecordingListener;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 import com.develotters.homeros.event.tag.Tag;
 import com.develotters.homeros.examples.prometheus.PrometheusServer;
 import com.develotters.homeros.examples.zipkin.SoutSender;
@@ -73,50 +73,50 @@ public class BookstoreExample {
 	}
 
 	private static void buy(String isbn, String author, String title, boolean reparable) {
-		SpanRecording<CompositeContext> spanRecording = recorder.recordingFor(BUY)
+		IntervalRecording<CompositeContext> recording = recorder.recordingFor(BUY)
 				.tag(Tag.of("isbn", isbn, HIGH))
 				.tag(Tag.of("author", author, LOW))
 				.tag(Tag.of("title", title, HIGH));
 
 		try {
-			spanRecording.start();
+			recording.start();
 			simulateBusiness();
 			repair(isbn, author, title, reparable);
 		}
 		catch (Throwable error) {
-			spanRecording.error(error);
+			recording.error(error);
 		}
 		finally {
-			spanRecording.stop();
+			recording.stop();
 		}
 	}
 
 	private static void sell(String isbn, String author, String title) {
-		SpanRecording<CompositeContext> spanRecording = recorder.recordingFor(SELL)
+		IntervalRecording<CompositeContext> recording = recorder.recordingFor(SELL)
 				.tag(Tag.of("isbn", isbn, HIGH))
 				.tag(Tag.of("author", author, LOW))
 				.tag(Tag.of("title", title, HIGH));
 
 		try {
-			spanRecording.start();
+			recording.start();
 			simulateBusiness();
 		}
 		catch (Throwable error) {
-			spanRecording.error(error);
+			recording.error(error);
 		}
 		finally {
-			spanRecording.stop();
+			recording.stop();
 		}
 	}
 
 	private static void repair(String isbn, String author, String title, boolean reparable) throws Throwable {
-		SpanRecording<CompositeContext> spanRecording = recorder.recordingFor(REPAIR)
+		IntervalRecording<CompositeContext> recording = recorder.recordingFor(REPAIR)
 				.tag(Tag.of("isbn", isbn, HIGH))
 				.tag(Tag.of("author", author, LOW))
 				.tag(Tag.of("title", title, HIGH));
 
 		try {
-			spanRecording.start();
+			recording.start();
 			recorder.recordingFor(ReparationEvent.NEW_TOOL)
 					.tag(Tag.of("isbn", isbn, HIGH))
 					.tag(Tag.of("author", author, LOW))
@@ -125,11 +125,11 @@ public class BookstoreExample {
 			simulateRepair(reparable);
 		}
 		catch (Throwable error) {
-			spanRecording.error(error);
+			recording.error(error);
 			throw error;
 		}
 		finally {
-			spanRecording.stop();
+			recording.stop();
 		}
 	}
 

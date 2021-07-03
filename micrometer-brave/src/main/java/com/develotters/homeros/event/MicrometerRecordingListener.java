@@ -8,7 +8,7 @@ import brave.propagation.TraceContext;
 import com.develotters.homeros.event.exemplar.Exemplar;
 import com.develotters.homeros.event.instant.InstantRecording;
 import com.develotters.homeros.event.listener.RecordingListener;
-import com.develotters.homeros.event.span.SpanRecording;
+import com.develotters.homeros.event.interval.IntervalRecording;
 import com.develotters.homeros.event.tag.Cardinality;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -23,23 +23,23 @@ public class MicrometerRecordingListener implements RecordingListener<Void> {
 	}
 
 	@Override
-	public void onStart(SpanRecording<Void> spanRecording) {
+	public void onStart(IntervalRecording<Void> intervalRecording) {
 	}
 
 	@Override
-	public void onStop(SpanRecording<Void> spanRecording) {
-		Timer.builder(spanRecording.getEvent().getName())
-				.description(spanRecording.getEvent().getDescription())
-				.tags(metricTags(spanRecording))
-				.tag("error", spanRecording.getError() != null ? spanRecording.getError().getClass().getSimpleName() : "none")
-//				.exemplars(exemplars(spanRecording)) // does not exist
+	public void onStop(IntervalRecording<Void> intervalRecording) {
+		Timer.builder(intervalRecording.getEvent().getName())
+				.description(intervalRecording.getEvent().getDescription())
+				.tags(metricTags(intervalRecording))
+				.tag("error", intervalRecording.getError() != null ? intervalRecording.getError().getClass().getSimpleName() : "none")
+//				.exemplars(exemplars(intervalRecording)) // does not exist
 //				.exemplars(exemplars(span.context())) // does not exist
 				.register(registry)
-				.record(spanRecording.getDuration());
+				.record(intervalRecording.getDuration());
 	}
 
 	@Override
-	public void onError(SpanRecording<Void> spanRecording) {
+	public void onError(IntervalRecording<Void> intervalRecording) {
 	}
 
 	@Override

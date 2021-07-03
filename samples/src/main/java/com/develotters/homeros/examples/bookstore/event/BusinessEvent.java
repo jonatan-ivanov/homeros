@@ -1,8 +1,8 @@
 package com.develotters.homeros.examples.bookstore.event;
 
-import com.develotters.homeros.event.span.SpanEvent;
+import com.develotters.homeros.event.interval.IntervalEvent;
 
-public enum BusinessEvent implements SpanEvent {
+public enum BusinessEvent implements IntervalEvent {
 	SELL("sell", "Sold something"),
 	REPAIR("repair", "Repaired something"),
 	BUY("buy", "Bought something");
