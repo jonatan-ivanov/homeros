@@ -6,24 +6,17 @@ import java.util.Collections;
 import com.develotters.homeros.event.tag.Tag;
 
 public class NoOpIntervalRecording<T> implements IntervalRecording<T> {
+	private static final IntervalEvent EVENT = new NoOpIntervalEvent();
+	private static final Iterable<Tag> TAGS = Collections.emptyList();
+
 	@Override
 	public IntervalEvent getEvent() {
-		return new IntervalEvent() {
-			@Override
-			public String getName() {
-				return "noop";
-			}
-
-			@Override
-			public String getDescription() {
-				return "noop";
-			}
-		};
+		return EVENT;
 	}
 
 	@Override
 	public Iterable<Tag> getTags() {
-		return Collections.emptyList();
+		return TAGS;
 	}
 
 	@Override
@@ -73,5 +66,17 @@ public class NoOpIntervalRecording<T> implements IntervalRecording<T> {
 	@Override
 	public T getContext() {
 		return null;
+	}
+
+	static class NoOpIntervalEvent implements IntervalEvent {
+		@Override
+		public String getName() {
+			return "noop";
+		}
+
+		@Override
+		public String getDescription() {
+			return "noop";
+		}
 	}
 }

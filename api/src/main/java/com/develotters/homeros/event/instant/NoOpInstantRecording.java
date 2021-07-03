@@ -5,24 +5,17 @@ import java.util.Collections;
 import com.develotters.homeros.event.tag.Tag;
 
 public class NoOpInstantRecording implements InstantRecording {
+	private static final InstantEvent EVENT = new NoOpInstantEvent();
+	private static final Iterable<Tag> TAGS = Collections.emptyList();
+
 	@Override
 	public InstantEvent getEvent() {
-		return new InstantEvent() {
-			@Override
-			public String getName() {
-				return "noop";
-			}
-
-			@Override
-			public String getDescription() {
-				return "noop";
-			}
-		};
+		return EVENT;
 	}
 
 	@Override
 	public Iterable<Tag> getTags() {
-		return Collections.emptyList();
+		return TAGS;
 	}
 
 	@Override
@@ -32,5 +25,17 @@ public class NoOpInstantRecording implements InstantRecording {
 
 	@Override
 	public void record() {
+	}
+
+	static class NoOpInstantEvent implements InstantEvent {
+		@Override
+		public String getName() {
+			return "noop";
+		}
+
+		@Override
+		public String getDescription() {
+			return "noop";
+		}
 	}
 }
