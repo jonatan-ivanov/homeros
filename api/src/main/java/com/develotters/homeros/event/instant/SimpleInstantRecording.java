@@ -24,7 +24,7 @@ public class SimpleInstantRecording implements InstantRecording {
 
 	@Override
 	public Iterable<Tag> getTags() {
-		return Collections.unmodifiableSet(tags);
+		return Collections.unmodifiableSet(this.tags);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class SimpleInstantRecording implements InstantRecording {
 
 	@Override
 	public void record() {
-		listener.record(this);
+		this.listener.record(this);
 	}
 
 	@Override
